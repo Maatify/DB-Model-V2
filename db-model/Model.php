@@ -44,6 +44,9 @@ abstract class Model extends PDOBuilder
     protected int $count = 0;
 
     protected string $class_name;
+    protected const IDENTIFY_TABLE_ID = 'id';
+    protected string $identify_table_id = self::IDENTIFY_TABLE_ID;
+    protected array $current_row;
 
     public function __construct()
     {
@@ -90,6 +93,14 @@ abstract class Model extends PDOBuilder
     protected function PostedID(): int
     {
         return $this->id = (int)$this->postValidator->Require('id', 'int');
+    }
+
+    protected function ValidatePostedTableId(): void
+    {
+        $this->id = (int)$this->postValidator->Require($this->identify_table_id, 'int');
+        if(!($this->current_row = $this->RowThisTable('*', "`$this->identify_table_id`", [$this->id]))){
+            Json::Incorrect("`$this->identify_table_id`", "$this->identify_table_id Not Found", $this->class_name . __LINE__);
+        }
     }
 
     protected function AddWherePagination(): string
