@@ -180,6 +180,11 @@ abstract class Model extends PDOBuilder
         return (int)$this->ColThisTable('`id`', '`id` > ? ORDER BY id DESC LIMIT 1', [0]);
     }
 
+    protected function MaxColThisTable(string $column): int
+    {
+        return (int)$this->ColThisTable("MAX(`$column`)");
+    }
+
     protected function Row(string $tableName, string $columns = '*', string $where = '', array $wheresVal = []): array
     {
         try {
