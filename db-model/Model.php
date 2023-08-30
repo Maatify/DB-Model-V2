@@ -35,6 +35,8 @@ abstract class Model extends PDOBuilder
     protected int $limit = 0;
     protected int|float $offset = 0;
     protected int $id = 0;
+    protected int $ct_id = 0;
+    protected int $admin_id = 0;
     protected int $pagination = 0;
     protected int $previous = 0;
 
