@@ -25,6 +25,7 @@ namespace Maatify\Model;
 use Maatify\Json\Json;
 use Maatify\PostValidator\PostValidator;
 use PDOException;
+use ReflectionClass;
 
 abstract class Model extends PDOBuilder
 {
@@ -42,6 +43,8 @@ abstract class Model extends PDOBuilder
 
     protected int $count = 0;
 
+    protected string $class_name;
+
     public function __construct()
     {
         $this->postValidator = PostValidator::obj();
@@ -52,6 +55,7 @@ abstract class Model extends PDOBuilder
             $this->previous = $this->pagination;
         }
         $this->offset = $this->pagination * $this->limit;
+        $this->class_name = (new ReflectionClass($this))->getShortName() . '::';
     }
 
     protected function PaginationNext(int $count): int
