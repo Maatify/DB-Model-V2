@@ -240,18 +240,14 @@ abstract class PDOBuilder
         return $this->SpecialQuery($fullAlert);
     }
 
-    private function SpecialQuery($query): bool
+    public function SpecialQuery($query): bool
     {
         $queryString = preg_replace('!\s+!', ' ', preg_replace('~[\r\n]+~', '', $query));
         try {
-            $query = $this->db->prepare($queryString);
-
-            return (bool)$this->ExecuteStatement($query);
-            //            return $query->execute($queryString);
+            return (bool)$this->ExecuteStatement($queryString);
         } catch (PDOException $e) {
             $this->LogError($e, 'SpecialQuery ' . $queryString, __LINE__, []);
             Json::DbError(__LINE__);
-
             return false;
         }
     }
