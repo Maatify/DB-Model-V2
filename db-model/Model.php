@@ -113,13 +113,14 @@ abstract class Model extends PDOBuilder
         ];
     }
 
-    protected function JsonHandlerWithOther(array $data, array $other = []): void
+    protected function JsonHandlerWithOther(array $data, array $other = [], string|int $line = ''): void
     {
         Json::Success(
             [
                 'data'  => $data,
                 'other' => $other,
-            ]
+            ],
+            line: $line
         );
     }
 
