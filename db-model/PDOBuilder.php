@@ -258,9 +258,9 @@ abstract class PDOBuilder
 
     protected function HtmlDecode(string $str): string
     {
-        $str = htmlspecialchars_decode($str);
         $str = str_replace('’', '&#039;', $str);
         $str = str_replace('"', '&quot;', $str);
+        $str = htmlspecialchars_decode($str);
         $str = stripslashes($str);
         return html_entity_decode($str);
     }
