@@ -70,7 +70,7 @@ abstract class Model extends PDOBuilder
             $page = (int)$pages + 1;
         }
         if ($count && $this->PaginationPrevious() + 1 > $page) {
-            Json::Incorrect('page');
+            return 0;
         }
 
         return $page;
