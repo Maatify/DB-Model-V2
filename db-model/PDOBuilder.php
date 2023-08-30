@@ -240,7 +240,7 @@ abstract class PDOBuilder
         return $this->SpecialQuery($fullAlert);
     }
 
-    public function SpecialQuery($query): bool
+    protected function SpecialQuery($query): bool
     {
         $queryString = preg_replace('!\s+!', ' ', preg_replace('~[\r\n]+~', '', $query));
         try {
