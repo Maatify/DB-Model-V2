@@ -60,7 +60,7 @@ class DB
 //            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             Logger::RecordLog([$e->getMessage(), (int) $e->getCode(), 'db_connection']);
-            Json::DbError(__LINE__);
+            Json::DbError('DB-' . __LINE__);
         }
     }
 
