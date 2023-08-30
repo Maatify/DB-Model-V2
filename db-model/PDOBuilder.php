@@ -215,14 +215,19 @@ abstract class PDOBuilder
     {
         if (gettype($val) == 'string') {
             return htmlspecialchars(
-                stripslashes(
-                    trim(str_replace(array("'", "&quot;", "&#039;"),
-                        "’",
-                        /*str_replace(array(' ', ','), '', $val)*/
-                        /*str_replace(',', '͵', $val)*/
-                        $val
+//                stripslashes(
+//                    trim(str_replace(array("'", "&quot;", "&#039;"),
+//                        "’",
+//                        /*str_replace(array(' ', ','), '', $val)*/
+//                        /*str_replace(',', '͵', $val)*/
+//                        $val
+//                    ))
+//                )
+                stripslashes(trim(str_replace(array("'", "&#039;"), "’",
+                        str_replace('&quot;', '"', str_replace(array(','), '&#44;', $val))
                     ))
-                ),
+                )
+                ,
                 ENT_QUOTES,
                 'UTF-8');
         }
@@ -249,5 +254,18 @@ abstract class PDOBuilder
 
             return false;
         }
+    }
+
+    protected function HtmlDecode(string $str): string
+    {
+        $str = htmlspecialchars_decode($str);
+        $str = str_replace('’', '&#039;', $str);
+        $str = str_replace('"', '&quot;', $str);
+        $str = stripslashes($str);
+        return html_entity_decode($str);
+    }
+
+    protected function Str2JsonFromDB(string $json_string){
+        return json_decode($this->HtmlDecode($json_string), true );
     }
 }
