@@ -219,7 +219,8 @@ abstract class PDOBuilder
                     trim(str_replace(array("'", "&quot;", "&#039;"),
                         "’",
                         /*str_replace(array(' ', ','), '', $val)*/
-                        str_replace(array(','), '', $val)
+                        /*str_replace(',', '͵', $val)*/
+                        $val
                     ))
                 ),
                 ENT_QUOTES,
