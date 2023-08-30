@@ -31,21 +31,20 @@ abstract class Model extends PDOBuilder
 {
 
     //========================================================================
-
     protected PostValidator $postValidator;
     protected int $limit = 0;
     protected int|float $offset = 0;
     protected int $id = 0;
+    protected int $row_id = 0;
     protected int $ct_id = 0;
     protected int $admin_id = 0;
     protected int $pagination = 0;
     protected int $previous = 0;
 
     protected int $count = 0;
-
     protected string $class_name;
-    protected const IDENTIFY_TABLE_ID = 'id';
-    protected string $identify_table_id = self::IDENTIFY_TABLE_ID;
+    protected const IDENTIFY_TABLE_ID_COL_NAME = 'id';
+    protected string $identify_table_id_col_name = self::IDENTIFY_TABLE_ID_COL_NAME;
     protected array $current_row;
 
     public function __construct()
@@ -97,9 +96,9 @@ abstract class Model extends PDOBuilder
 
     protected function ValidatePostedTableId(): void
     {
-        $this->id = (int)$this->postValidator->Require($this->identify_table_id, 'int');
-        if(!($this->current_row = $this->RowThisTable('*', "`$this->identify_table_id`", [$this->id]))){
-            Json::Incorrect("`$this->identify_table_id`", "$this->identify_table_id Not Found", $this->class_name . __LINE__);
+        $this->row_id = (int)$this->postValidator->Require($this->identify_table_id_col_name, 'int');
+        if(!($this->current_row = $this->RowThisTable('*', "`$this->identify_table_id_col_name`", [$this->row_id]))){
+            Json::Incorrect("`$this->identify_table_id_col_name`", "$this->identify_table_id_col_name Not Found", $this->class_name . __LINE__);
         }
     }
 

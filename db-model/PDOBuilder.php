@@ -30,8 +30,8 @@ abstract class PDOBuilder
 {
 
     protected DB $db;
-
-    protected string $tableName;
+    const TABLE_NAME = 'admin';
+    protected string $tableName = self::TABLE_NAME;
     protected string $tableAlias;
 
     protected array $cols = [];
